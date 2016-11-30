@@ -33,15 +33,20 @@ class App extends Component {
     }, 3000);
   }
 
-  submittedMessage(msg) {
-    this.setState({messages: [{id:4, username:"me", content:msg}]});
+  submittedMessage(username, msg) {
+    let lastMsgID = this.state.messages[this.state.messages.length - 1].id;
+    let newMsgID = lastMsgID+1;
+
+    let newMsg = {
+      id:newMsgID,
+      username:username,
+      content:msg
+    };
+
+    this.setState({
+      messages: this.state.messages.concat(newMsg)
+    })
   }
-
-
-// previous messages shouldn't be deleted.
-// values for id and username not proper.
-
-
 
   render() {
     return (
