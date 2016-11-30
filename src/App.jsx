@@ -31,6 +31,13 @@ class App extends Component {
       const messages = this.state.messages.concat(newMessage)
       this.setState({messages: messages})
     }, 3000);
+
+
+    this.socket = new WebSocket("ws://localhost:4000");
+
+    this.socket.onopen = (e) => {
+      console.log("Connected to server...", e)
+    }
   }
 
   submittedMessage(username, msg) {
