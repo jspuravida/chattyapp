@@ -32,17 +32,15 @@ class App extends Component {
       this.setState({messages: messages})
     }, 3000);
 
-
-    this.socket = new WebSocket("ws://localhost:4000");
-
+    this.socket = new WebSocket("ws://localhost:4000"); // this connects to our socket
     this.socket.onopen = (e) => {
-      console.log("Connected to server...", e)
-    }
+      console.log("Connected to server...", e);
+    } // this displays when client has successfully connected to external server
   }
 
   submittedMessage(username, msg) {
     let lastMsgID = this.state.messages[this.state.messages.length - 1].id;
-    let newMsgID = lastMsgID+1;
+    let newMsgID = lastMsgID+1;  // this is taking the last recorded ID, and adding 1 to it for the next msg.
 
     let newMsg = {
       id:newMsgID,
@@ -50,10 +48,10 @@ class App extends Component {
       content:msg
     };
 
-    this.setState({
-      messages: this.state.messages.concat(newMsg)
-    })
-  }
+    this.setState({messages: this.state.messages.concat(newMsg)})
+    this.socket.send(JSON.stringify(newMsg));
+
+  } // This appends the new message to this.state.messages
 
   render() {
     return (

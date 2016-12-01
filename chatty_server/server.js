@@ -7,9 +7,10 @@ const PORT = 4000;
 // Create a new express server
 const server = express()
    // Make the express server serve static assets (html, javascript, css) from the /public folder
-  .use(express.static('public'))
-  .listen(PORT, '0.0.0.0', 'localhost', () =>
-    console.log(`Listening on ${ PORT }`));
+.use(express.static('public'))
+
+.listen(PORT, '0.0.0.0', 'localhost', () =>
+  console.log(`Listening on ${ PORT }`));
 
 // Create the WebSockets server
 const wss = new SocketServer({ server });
@@ -19,6 +20,11 @@ const wss = new SocketServer({ server });
 // the ws parameter in the callback.
 wss.on('connection', (ws) => {
   console.log('Client connected');
+
+  ws.on('message', function (msg) {
+    let parsedData = JSON.parse(msg)
+    console.log("User " + parsedData.username + " said " + parsedData.content);
+  });
 
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
   ws.on('close', () =>
