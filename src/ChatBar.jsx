@@ -4,10 +4,11 @@ class Chatbar extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      type: '',
       username: '',
       message: ''
     };
-    this.detectEnter = this.detectEnter.bind(this);
+    // this.detectEnter = this.detectEnter.bind(this);
     this.handleContentChange = this.handleContentChange.bind(this);
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
   }
@@ -22,7 +23,7 @@ class Chatbar extends Component {
           placeholder="Your Name (Optional)"
           value={this.state.username}
           onChange={this.handleUsernameChange}
-          onKeyDown={this.detectEnter}
+          onKeyDown={this.changeUserName.bind(this)}
         />
 
         <input
@@ -31,7 +32,8 @@ class Chatbar extends Component {
           placeholder="Type a message and hit ENTER"
           value={this.state.message}
           onChange={this.handleContentChange}
-          onKeyDown={this.detectEnter}
+          onKeyDown={this.contentEntered.bind(this)}
+          // onKeyDown={this.detectEnter}
         />
       </footer>
     );
@@ -45,12 +47,40 @@ class Chatbar extends Component {
     this.setState({message: event.target.value});
   }
 
-  detectEnter(event){
-    if (event.key == 'Enter') {
-      this.props.finishMessage(this.state.username, this.state.message);
-      this.setState({username: '', message: ''});
+  changeUserName(event) {
+    const { keyCode } = event;
+    const userName = this.state.username;
+    const { name } = this.props.currentUser;
+
+    if (keyCode === 13) {
+      if (userName !== name) {
+        const notifMsg = `${name} just paid for a namechange to ${userName}`;
+        this.props.finishMessage("postNotification", name, notifMsg);
+        this.props.updateName(userName);
+      }
     }
   }
+
+  contentEntered(event) {
+    const { keyCode } = event;
+    const userName = this.state.username;
+    const { name } = this.props.currentUser;
+    const msg = this.state.message;
+    if (keyCode === 13) {
+      if (userName !== name) {
+        this.props.updateName(userName);
+      }
+      this.props.finishMessage("postMessage", userName, msg);
+      this.setState({message: ''});
+    }
+  }
+
+  // detectEnter(event){
+  //   if (event.key == 'Enter') {
+  //     this.props.finishMessage(this.state.type, this.state.username, this.state.message);
+  //     this.setState({username: '', message: ''});
+  //   }
+  // }
 
 }
 export default Chatbar;
