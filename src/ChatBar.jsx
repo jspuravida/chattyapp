@@ -74,14 +74,6 @@ class Chatbar extends Component {
       this.setState({message: ''});
     }
   }
-
-  // detectEnter(event){
-  //   if (event.key == 'Enter') {
-  //     this.props.finishMessage(this.state.type, this.state.username, this.state.message);
-  //     this.setState({username: '', message: ''});
-  //   }
-  // }
-
 }
 export default Chatbar;
 
