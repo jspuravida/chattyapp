@@ -8,7 +8,6 @@ class Chatbar extends Component {
       username: '',
       message: ''
     };
-    // this.detectEnter = this.detectEnter.bind(this);
     this.handleContentChange = this.handleContentChange.bind(this);
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
   }
@@ -33,7 +32,6 @@ class Chatbar extends Component {
           value={this.state.message}
           onChange={this.handleContentChange}
           onKeyDown={this.contentEntered.bind(this)}
-          // onKeyDown={this.detectEnter}
         />
       </footer>
     );
