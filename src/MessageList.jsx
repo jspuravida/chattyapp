@@ -8,6 +8,9 @@ class MessageList extends Component {
       <div id="message-list">
         {this.props.messages.map(function (message) {
           // message should be an object with an 'username' property and a content property
+          // question: what was the reasoning behind splitting up the props?
+          // as opposed to:
+          //  <Message key={message.id} message={message} />
           return (<Message key={message.id} username={message.username} content={message.content} type={message.type} />);
         })
         }

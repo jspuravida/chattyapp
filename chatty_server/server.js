@@ -11,7 +11,7 @@ const server = express();
   console.log(`Listening on ${ PORT }`));
 
 function notifyEveryoneOfUserCount(wss){
-  var usersOnline = wss.clients.length;
+  var usersOnline = wss.clients.length; // could be a const
   console.log('There are this many users online: ', usersOnline);
   let usersOnlineMessage = {
     type: "userCountNotification",
@@ -39,7 +39,7 @@ wss.on('connection', (ws) => {
       content: parsedMessage.content
     }
 
-    if(parsedMessage.type = 'postMessage') {
+    if(parsedMessage.type = 'postMessage') { // yikes! this should be == or ===
       parsedNewMessage.type = 'incomingMessage'
       console.log('I need to broadcast a message');
     } else {
