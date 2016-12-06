@@ -3,7 +3,9 @@ import React, {Component} from 'react';
 class Message extends Component {
   render() {
     console.log("Rendering Message");
-    var msg;
+    var msg; // remove unused variable
+
+    // question: How would you do this conditional in jsx
     if (this.props.type === 'incomingMessage') {
       return (
         <div>

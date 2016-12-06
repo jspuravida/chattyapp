@@ -33,13 +33,28 @@ class App extends Component {
           // this.state.userCount = updatedMessage.count;   // we wish this worked
           this.setState({userCount: updatedMessage.count}); // we gotta do it this way
         }
+        // FYI: The code above looks great, but you could rewrite it with a switch statement
+        // The switch statement is good if you have a lot of cases.
+        switch(updateMessage.type) {
+          case "incomingMessage":
+          case "incomingNotifiation":
+            const newMessages = this.state.messages.concat(updatedMessage);
+            this.setState({messages: newMessages});
+            break;
+          case "userCountNotification":
+            console.log(updatedMessage.count);
+            this.setState({userCount: updatedMessage.count}); // we gotta do it this way
+            break;
+          default:
+            console.warn("Unhandled incoming message ", updateMessage)
+        }
       }
     }
   }
 
   submittedMessage(type, username, content) {
 
-    let newMsg = {
+    let newMsg = { // fancy ES6 syntax :)
       type,
       username,
       content

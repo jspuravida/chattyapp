@@ -48,12 +48,12 @@ class Chatbar extends Component {
   changeUserName(event) {
     const { keyCode } = event;
     const userName = this.state.username;
-    const { name } = this.props.currentUser;
+    const { name } = this.props.currentUser; // nice destructuring here!
 
     if (keyCode === 13) {
       if (userName !== name) {
-        const notifMsg = `${name} just paid for a namechange to ${userName}`;
-        this.props.finishMessage("postNotification", name, notifMsg);
+        const notifMsg = `${name} just paid for a namechange to ${userName}`; // plz dnt hate on vwls
+        this.props.finishMessage("postNotification", name, notifMsg); // suggest refactor here so ChatBar doesn't have to know the names of the websocket messages.
         this.props.updateName(userName);
       }
     }
